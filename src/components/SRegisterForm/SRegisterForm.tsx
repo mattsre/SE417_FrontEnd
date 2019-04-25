@@ -4,6 +4,7 @@ import React, { PureComponent } from "react";
 import { handleStringChange } from "@blueprintjs/docs-theme";
 import { Card, Elevation, H5, FormGroup, InputGroup, Button, Toaster, Intent } from "@blueprintjs/core";
 import { Link, Redirect } from "react-router-dom";
+import { ValidState } from "../../helpers/FormDataHelpers";
 import "./SRegisterForm.css";
 
 // Create User GraphQL mutation
@@ -21,13 +22,6 @@ const CREATE_USER = gql`
     }
   }
 `;
-
-// Validation State Enum
-enum ValidState {
-  Empty,
-  Not_Valid,
-  Valid
-}
 
 // SRegisterProps
 interface ISRegisterProps {
@@ -177,11 +171,13 @@ class SRegisterForm extends PureComponent<ISRegisterProps, ISRegisterState> {
                 rightIcon="arrow-right"
                 intent="success"
                 text="Register"
+                loading={this.state.status.register_loading}
+                type="submit"
                 onClick={(e: any) => {
                   e.preventDefault();
                   let validationPass = true;
                   Object.entries(this.state.validation).forEach(([_, val]) => {
-                    if (val !== 2) {
+                    if (val !== ValidState.Valid) {
                       validationPass = false;
                     }
                   });
@@ -204,7 +200,6 @@ class SRegisterForm extends PureComponent<ISRegisterProps, ISRegisterState> {
                     });
                   }
                 }}
-                loading={this.state.status.register_loading}
               />
               <Link to="/login">
                 <Button
@@ -212,6 +207,7 @@ class SRegisterForm extends PureComponent<ISRegisterProps, ISRegisterState> {
                   minimal={true}
                   intent="none"
                   text="Or Login"
+                  type="button"
                 />
               </Link>
             </Card>
