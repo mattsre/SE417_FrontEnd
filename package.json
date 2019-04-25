@@ -24,7 +24,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "generate-docs": "node_modules/.bin/typedoc --theme node_modules/typedoc-twilio-theme/bin --out docs src/"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,6 +47,8 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4"
+    "eslint-plugin-react": "^7.12.4",
+    "typedoc": "^0.14.2",
+    "typedoc-twilio-theme": "^1.0.0"
   }
 }

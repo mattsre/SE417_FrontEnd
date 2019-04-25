@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { handleStringChange } from "@blueprintjs/docs-theme";
 import { Card, Elevation, H5, FormGroup, InputGroup, Button, Intent, Toaster } from "@blueprintjs/core";
 import { Link, Redirect } from "react-router-dom";
-import { ValidState } from "../../helpers/FormDataHelpers";
+import { ValidState, handleUserDataStateChange } from "../../helpers/FormDataHelpers";
 import gql from "graphql-tag";
 import { Mutation, MutationFunc } from "react-apollo";
 import "./SLoginForm.css";
@@ -81,9 +81,10 @@ class SLoginForm extends PureComponent<ISLoginProps, ISLoginState> {
                 intent={this.validationIntentHelper(this.state.validation.valid_email)}
               >
                 <InputGroup
+                  name="user_email"
                   value={this.state.user_data.user_email}
                   type="email"
-                  onChange={this.handleEmailChange}
+                  onChange={(e: React.FormEvent<HTMLInputElement>) => handleUserDataStateChange.call(this, e)}
                   onBlur={this.validateUserEmail}
                   intent={this.validationIntentHelper(this.state.validation.valid_email)}
                   placeholder="username@email.com"
@@ -96,9 +97,10 @@ class SLoginForm extends PureComponent<ISLoginProps, ISLoginState> {
                 intent={this.validationIntentHelper(this.state.validation.valid_password)}
               >
                 <InputGroup
+                  name="user_password"
                   value={this.state.user_data.user_password}
                   type="password"
-                  onChange={this.handlePasswordChange}
+                  onChange={(e: React.FormEvent<HTMLInputElement>) => handleUserDataStateChange.call(this, e)}
                   onBlur={this.validatePassword}
                   intent={this.validationIntentHelper(this.state.validation.valid_password)}
                   placeholder="password"
