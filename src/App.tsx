@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { ApolloProvider } from "react-apollo";
+import {
+  BrowserRouter as Router,
+  Route
+} from "react-router-dom";
+
+import { client } from './apollo';
+import SRegisterForm from "./components/SRegisterForm/SRegisterForm";
+import SLoginForm from './components/SLoginForm/SLoginForm';
 import './App.css';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <ApolloProvider client={client}>
+        <Router>
+          <div className="container">
+            <Route path="/register" component={SRegisterForm} />
+            <Route path="/login" component={SLoginForm} />
+          </div>
+        </Router>
+      </ApolloProvider>
+    );
+  }
 }
 
 export default App;
