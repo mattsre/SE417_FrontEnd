@@ -5,6 +5,8 @@ import { handleStringChange } from "@blueprintjs/docs-theme";
 import { Card, Elevation, H5, FormGroup, InputGroup, Button, Toaster, Intent } from "@blueprintjs/core";
 import { Link, Redirect } from "react-router-dom";
 import { ValidState } from "../../helpers/FormDataHelpers";
+
+import SGrid from '../SGrid/SGrid';
 import "./SRegisterForm.css";
 
 // Create User GraphQL mutation
@@ -91,126 +93,128 @@ class SRegisterForm extends PureComponent<ISRegisterProps, ISRegisterState> {
       >
         {(createUser: MutationFunc) => (
           <React.Fragment>
-            <Toaster ref={this.refHandlers.toaster} />
-            <Card elevation={Elevation.TWO}>
-              <H5>Registration</H5>
-              <FormGroup
-                label="Email"
-                helperText={this.state.validation.valid_email !== ValidState.Not_Valid ? "This email will be used to login." : "Please enter a valid email address."}
-                intent={this.validationIntentHelper(this.state.validation.valid_email)}
-              >
-                <InputGroup
-                  value={this.state.user_data.user_email}
-                  type="email"
-                  onChange={this.handleEmailChange}
-                  onBlur={this.validateUserEmail}
+            <SGrid>
+              <Toaster ref={this.refHandlers.toaster} />
+              <Card elevation={Elevation.TWO}>
+                <H5>Registration</H5>
+                <FormGroup
+                  label="Email"
+                  helperText={this.state.validation.valid_email !== ValidState.Not_Valid ? "This email will be used to login." : "Please enter a valid email address."}
                   intent={this.validationIntentHelper(this.state.validation.valid_email)}
-                  placeholder="username@email.com"
-                  required
-                />
-              </FormGroup>
-              <FormGroup
-                label="First Name"
-                helperText={this.state.validation.valid_fname !== ValidState.Not_Valid ? "" : "Please enter a valid first name."}
-                intent={this.validationIntentHelper(this.state.validation.valid_fname)}
-              >
-                <InputGroup
-                  value={this.state.user_data.user_fname}
-                  onChange={this.handleFNameChange}
-                  onBlur={this.validateUserFName}
+                >
+                  <InputGroup
+                    value={this.state.user_data.user_email}
+                    type="email"
+                    onChange={this.handleEmailChange}
+                    onBlur={this.validateUserEmail}
+                    intent={this.validationIntentHelper(this.state.validation.valid_email)}
+                    placeholder="username@email.com"
+                    required
+                  />
+                </FormGroup>
+                <FormGroup
+                  label="First Name"
+                  helperText={this.state.validation.valid_fname !== ValidState.Not_Valid ? "" : "Please enter a valid first name."}
                   intent={this.validationIntentHelper(this.state.validation.valid_fname)}
-                  placeholder="John"
-                  required
-                />
-              </FormGroup>
-              <FormGroup
-                label="Last Name"
-                helperText={this.state.validation.valid_lname !== ValidState.Not_Valid ? "" : "Please enter a valid last name."}
-                intent={this.validationIntentHelper(this.state.validation.valid_lname)}
-              >
-                <InputGroup
-                  value={this.state.user_data.user_lname}
-                  onChange={this.handleLNameChange}
-                  onBlur={this.validateUserLName}
+                >
+                  <InputGroup
+                    value={this.state.user_data.user_fname}
+                    onChange={this.handleFNameChange}
+                    onBlur={this.validateUserFName}
+                    intent={this.validationIntentHelper(this.state.validation.valid_fname)}
+                    placeholder="John"
+                    required
+                  />
+                </FormGroup>
+                <FormGroup
+                  label="Last Name"
+                  helperText={this.state.validation.valid_lname !== ValidState.Not_Valid ? "" : "Please enter a valid last name."}
                   intent={this.validationIntentHelper(this.state.validation.valid_lname)}
-                  placeholder="Doe"
-                  required
-                />
-              </FormGroup>
-              <FormGroup
-                label="Password"
-                helperText={this.state.validation.valid_password !== ValidState.Not_Valid ? "Minimum eight characters, at least one uppercase letter, one lowercase letter, and one number" : "Please enter a valid password - Minimum eight characters, at least one uppercase letter, one lowercase letter and one number."}
-                intent={this.validationIntentHelper(this.state.validation.valid_password)}
-              >
-                <InputGroup
-                  value={this.state.user_data.user_password}
-                  type="password"
-                  onChange={this.handlePasswordChange}
-                  onBlur={this.validatePassword}
+                >
+                  <InputGroup
+                    value={this.state.user_data.user_lname}
+                    onChange={this.handleLNameChange}
+                    onBlur={this.validateUserLName}
+                    intent={this.validationIntentHelper(this.state.validation.valid_lname)}
+                    placeholder="Doe"
+                    required
+                  />
+                </FormGroup>
+                <FormGroup
+                  label="Password"
+                  helperText={this.state.validation.valid_password !== ValidState.Not_Valid ? "Minimum eight characters, at least one uppercase letter, one lowercase letter, and one number" : "Please enter a valid password - Minimum eight characters, at least one uppercase letter, one lowercase letter and one number."}
                   intent={this.validationIntentHelper(this.state.validation.valid_password)}
-                  placeholder="password"
-                  required
-                />
-              </FormGroup>
-              <FormGroup
-                label="Password Confirm"
-                helperText={this.state.validation.valid_password_confirm !== ValidState.Not_Valid ? "Confirm your password" : "Passwords do not match"}
-                intent={this.validationIntentHelper(this.state.validation.valid_password_confirm)}
-              >
-                <InputGroup
-                  value={this.state.user_data.user_password_confirm}
-                  type="password"
-                  onChange={this.handlePasswordConfirmChange}
-                  onBlur={this.validatePasswordConfirm}
+                >
+                  <InputGroup
+                    value={this.state.user_data.user_password}
+                    type="password"
+                    onChange={this.handlePasswordChange}
+                    onBlur={this.validatePassword}
+                    intent={this.validationIntentHelper(this.state.validation.valid_password)}
+                    placeholder="password"
+                    required
+                  />
+                </FormGroup>
+                <FormGroup
+                  label="Password Confirm"
+                  helperText={this.state.validation.valid_password_confirm !== ValidState.Not_Valid ? "Confirm your password" : "Passwords do not match"}
                   intent={this.validationIntentHelper(this.state.validation.valid_password_confirm)}
-                  placeholder="password"
-                  required
-                />
-              </FormGroup>
-              <Button
-                rightIcon="arrow-right"
-                intent="success"
-                text="Register"
-                loading={this.state.status.register_loading}
-                type="submit"
-                onClick={(e: any) => {
-                  e.preventDefault();
-                  let validationPass = true;
-                  Object.entries(this.state.validation).forEach(([_, val]) => {
-                    if (val !== ValidState.Valid) {
-                      validationPass = false;
-                    }
-                  });
-                  if (validationPass) {
-                    this.setStatusState("register_loading", true);
-                    createUser({
-                      variables: {
-                        user: {
-                          email: this.state.user_data.user_email,
-                          firstname: this.state.user_data.user_fname,
-                          lastname: this.state.user_data.user_lname,
-                          pass: this.state.user_data.user_password
-                        }
+                >
+                  <InputGroup
+                    value={this.state.user_data.user_password_confirm}
+                    type="password"
+                    onChange={this.handlePasswordConfirmChange}
+                    onBlur={this.validatePasswordConfirm}
+                    intent={this.validationIntentHelper(this.state.validation.valid_password_confirm)}
+                    placeholder="password"
+                    required
+                  />
+                </FormGroup>
+                <Button
+                  rightIcon="arrow-right"
+                  intent="success"
+                  text="Register"
+                  loading={this.state.status.register_loading}
+                  type="submit"
+                  onClick={(e: any) => {
+                    e.preventDefault();
+                    let validationPass = true;
+                    Object.entries(this.state.validation).forEach(([_, val]) => {
+                      if (val !== ValidState.Valid) {
+                        validationPass = false;
                       }
                     });
-                  } else {
-                    this.toaster.show({
-                      intent: Intent.DANGER,
-                      message: "Validation failed, please register with valid information!"
-                    });
-                  }
-                }}
-              />
-              <Link to="/login">
-                <Button
-                  className="secondaryButton"
-                  minimal={true}
-                  intent="none"
-                  text="Or Login"
-                  type="button"
+                    if (validationPass) {
+                      this.setStatusState("register_loading", true);
+                      createUser({
+                        variables: {
+                          user: {
+                            email: this.state.user_data.user_email,
+                            firstname: this.state.user_data.user_fname,
+                            lastname: this.state.user_data.user_lname,
+                            pass: this.state.user_data.user_password
+                          }
+                        }
+                      });
+                    } else {
+                      this.toaster.show({
+                        intent: Intent.DANGER,
+                        message: "Validation failed, please register with valid information!"
+                      });
+                    }
+                  }}
                 />
-              </Link>
-            </Card>
+                <Link to="/login">
+                  <Button
+                    className="secondaryButton"
+                    minimal={true}
+                    intent="none"
+                    text="Or Login"
+                    type="button"
+                  />
+                </Link>
+              </Card>
+            </SGrid>
           </React.Fragment>
         )}
       </Mutation>

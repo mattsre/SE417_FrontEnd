@@ -5,6 +5,8 @@ import { Link, Redirect } from "react-router-dom";
 import { ValidState } from "../../helpers/FormDataHelpers";
 import gql from "graphql-tag";
 import { Mutation, MutationFunc } from "react-apollo";
+
+import SGrid from '../SGrid/SGrid';
 import "./SLoginForm.css";
 
 // Login User GraphQL mutation
@@ -72,81 +74,83 @@ class SLoginForm extends PureComponent<ISLoginProps, ISLoginState> {
       >
         {(loginUser: MutationFunc) => (
           <React.Fragment>
-            <Toaster ref={this.refHandlers.toaster} />
-            <Card elevation={Elevation.TWO}>
-              <H5>Login</H5>
-              <FormGroup
-                label="Email"
-                helperText={this.state.validation.valid_email !== ValidState.Not_Valid ? "Enter the email address associated with your account" : "Please enter a valid email address."}
-                intent={this.validationIntentHelper(this.state.validation.valid_email)}
-              >
-                <InputGroup
-                  value={this.state.user_data.user_email}
-                  type="email"
-                  onChange={this.handleEmailChange}
-                  onBlur={this.validateUserEmail}
+            <SGrid>
+              <Toaster ref={this.refHandlers.toaster} />
+              <Card elevation={Elevation.TWO}>
+                <H5>Login</H5>
+                <FormGroup
+                  label="Email"
+                  helperText={this.state.validation.valid_email !== ValidState.Not_Valid ? "Enter the email address associated with your account" : "Please enter a valid email address."}
                   intent={this.validationIntentHelper(this.state.validation.valid_email)}
-                  placeholder="username@email.com"
-                  required
-                />
-              </FormGroup>
-              <FormGroup
-                label="Password"
-                helperText={this.state.validation.valid_password !== ValidState.Not_Valid ? "Please enter your password" : "This password does not meet our security requirements, please try again"}
-                intent={this.validationIntentHelper(this.state.validation.valid_password)}
-              >
-                <InputGroup
-                  value={this.state.user_data.user_password}
-                  type="password"
-                  onChange={this.handlePasswordChange}
-                  onBlur={this.validatePassword}
+                >
+                  <InputGroup
+                    value={this.state.user_data.user_email}
+                    type="email"
+                    onChange={this.handleEmailChange}
+                    onBlur={this.validateUserEmail}
+                    intent={this.validationIntentHelper(this.state.validation.valid_email)}
+                    placeholder="username@email.com"
+                    required
+                  />
+                </FormGroup>
+                <FormGroup
+                  label="Password"
+                  helperText={this.state.validation.valid_password !== ValidState.Not_Valid ? "Please enter your password" : "This password does not meet our security requirements, please try again"}
                   intent={this.validationIntentHelper(this.state.validation.valid_password)}
-                  placeholder="password"
-                  required
-                />
-              </FormGroup>
-              <Button
-                rightIcon="arrow-right"
-                intent="success"
-                text="Login"
-                loading={this.state.status.login_loading}
-                type="submit"
-                onClick={(e: any) => {
-                  e.preventDefault();
-                  let validationPass = true;
-                  Object.entries(this.state.validation).forEach(([_, val]) => {
-                    if (val !== ValidState.Valid) {
-                      validationPass = false;
-                    }
-                  });
-                  if (validationPass) {
-                    this.setStatusState("login_loading", true);
-                    loginUser({
-                      variables: {
-                        credentials: {
-                          email: this.state.user_data.user_email,
-                          pass: this.state.user_data.user_password
-                        }
+                >
+                  <InputGroup
+                    value={this.state.user_data.user_password}
+                    type="password"
+                    onChange={this.handlePasswordChange}
+                    onBlur={this.validatePassword}
+                    intent={this.validationIntentHelper(this.state.validation.valid_password)}
+                    placeholder="password"
+                    required
+                  />
+                </FormGroup>
+                <Button
+                  rightIcon="arrow-right"
+                  intent="success"
+                  text="Login"
+                  loading={this.state.status.login_loading}
+                  type="submit"
+                  onClick={(e: any) => {
+                    e.preventDefault();
+                    let validationPass = true;
+                    Object.entries(this.state.validation).forEach(([_, val]) => {
+                      if (val !== ValidState.Valid) {
+                        validationPass = false;
                       }
                     });
-                  } else {
-                    this.toaster.show({
-                      intent: Intent.DANGER,
-                      message: "The provided login is invalid!"
-                    });
-                  }
-                }}
-              />
-              <Link to="/register">
-                <Button
-                  className="secondaryButton"
-                  minimal={true}
-                  intent="none"
-                  text="Or Register"
-                  type="button"
+                    if (validationPass) {
+                      this.setStatusState("login_loading", true);
+                      loginUser({
+                        variables: {
+                          credentials: {
+                            email: this.state.user_data.user_email,
+                            pass: this.state.user_data.user_password
+                          }
+                        }
+                      });
+                    } else {
+                      this.toaster.show({
+                        intent: Intent.DANGER,
+                        message: "The provided login is invalid!"
+                      });
+                    }
+                  }}
                 />
-              </Link>
-            </Card>
+                <Link to="/register">
+                  <Button
+                    className="secondaryButton"
+                    minimal={true}
+                    intent="none"
+                    text="Or Register"
+                    type="button"
+                  />
+                </Link>
+              </Card>
+            </SGrid>
           </React.Fragment>
         )}
       </Mutation>

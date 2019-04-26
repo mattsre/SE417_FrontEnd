@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { ApolloProvider } from "react-apollo";
+import { client } from './apollo';
 import {
   BrowserRouter as Router,
   Route
 } from "react-router-dom";
 
-import { client } from './apollo';
+import SDashboard from './components/SDashboard/SDashboard';
 import SRegisterForm from "./components/SRegisterForm/SRegisterForm";
 import SLoginForm from './components/SLoginForm/SLoginForm';
 import './App.css';
@@ -15,10 +16,9 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <Router>
-          <div className="container">
-            <Route path="/register" component={SRegisterForm} />
-            <Route path="/login" component={SLoginForm} />
-          </div>
+          <Route path="/dashboard" component={SDashboard} />
+          <Route path="/register" component={SRegisterForm} />
+          <Route path="/login" component={SLoginForm} />
         </Router>
       </ApolloProvider>
     );
