@@ -13,6 +13,7 @@ import "./SLoginForm.css";
 const LOGIN_USER = gql`
   mutation LoginUser($credentials: LoginInput!) {
     loginUser(credentials: $credentials) {
+      jwt
       statusCode
       message
       loggedIn
@@ -173,6 +174,7 @@ class SLoginForm extends PureComponent<ISLoginProps, ISLoginState> {
     this.setStatusState("login_loading", false);
     const res = { ...data.loginUser };
     if (res.loggedIn) {
+      localStorage.setItem("token", res.jwt);
       this.setStatusState("to_dashboard", true);
     } else {
       this.toaster.show({

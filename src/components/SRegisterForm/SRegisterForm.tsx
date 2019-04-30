@@ -13,6 +13,7 @@ import "./SRegisterForm.css";
 const CREATE_USER = gql`
   mutation CreateUser($user: UserInput!) {
     createUser(user: $user) {
+      jwt
       statusCode
       message
       user {
@@ -234,6 +235,7 @@ class SRegisterForm extends PureComponent<ISRegisterProps, ISRegisterState> {
     this.setStatusState("register_loading", false);
     const res = { ...data.createUser };
     if (res.statusCode === 200) {
+      localStorage.setItem("token", res.jwt);
       this.setStatusState("to_dashboard", true);
     }
   }
