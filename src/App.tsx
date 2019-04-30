@@ -4,7 +4,8 @@ import { client } from './apollo';
 import {
   BrowserRouter as Router,
   Route,
-  Redirect
+  Redirect,
+  Switch
 } from "react-router-dom";
 import jwtDecode from 'jwt-decode';
 
@@ -40,9 +41,12 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <Router>
-          <PrivateRoute path="/dashboard" component={SDashboard} />
-          <Route path="/register" component={SRegisterForm} />
-          <Route path="/login" component={SLoginForm} />
+          <Switch>
+            <PrivateRoute path="/dashboard" component={SDashboard} />
+            <Route path="/register" component={SRegisterForm} />
+            <Route path="/login" component={SLoginForm} />
+            <Redirect from="/" to="/login" />
+          </Switch>
         </Router>
       </ApolloProvider>
     );
